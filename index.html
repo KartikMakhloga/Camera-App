@@ -7,16 +7,34 @@
     <title>Document</title>
   </head>
   <body>
-    <video controls autoplay></video>
+    <video src="any video link here" controls autoplay></video>
+    <!-- 'control' is a property which gives controls to the media player -->
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
 
     <script>
- 
-      let video = document.querySelector("video")
+      let video = document.querySelector("video");
+      let startBtn = document.querySelector("#start");
+      let stopBtn = document.querySelector("#stop");
+      let mediaRecorder;
+
+      // navigator is a object in browser in which their is mediaDevices is present which is a child object
+      // of a navigator. In mediaDevices their is a function called getUserMedia which help us to get
+      // Permissions of media from the hardware using browser
+      startBtn.addEventListener("click",function(){
+
+      });
+      stopBtn.addEventListener("click",function(){
+
+      });
 
       navigator.mediaDevices
         .getUserMedia({ video: true, audio: true })
         .then(function (mainStream) {
-            video.srcObject = mainStream;
+          video.srcObject = mainStream;
+        })
+        .catch(function (err) {
+          console.log(err);
         });
     </script>
   </body>

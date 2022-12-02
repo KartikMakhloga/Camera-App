@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      * {
+        box-sizing: border-box;
+      }
 
-        *{
-            box-sizing: border-box;
-        }
-
-        body{
-            margin: 0;
-            overflow: hidden;
-        }
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <canvas></canvas>
 
     <script>
-        let canvas = document.querySelector("canvas");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+      let canvas = document.querySelector("canvas");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      let tool = canvas.getContext("2d");
+      tool.moveTo(0, 0); //It move the cursor to the (0,0) axis
+      tool.lineTo(400, 400); //It draws line from cursor to the (400,400) point
+      tool.strokeStyle = "red"; //It gives color
+      tool.lineWidth = 1; //It increase the line width by 1 percent;
+      tool.stroke(); //It makes the line visible
+      tool.beginPath(); //It gives new path to the line
+      tool.moveTo(400, 400);
+      tool.lineTo(800, 0);
+      tool.strokeStyle = "blue";
+      tool.lineWidth = 1;
+      tool.stroke();
+
+      //This code is for making a rectangle
+
+      tool.fillStyle = "red";
+      tool.fillRect(100,100,200,200);
     </script>
-</body>
+  </body>
 </html>

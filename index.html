@@ -17,21 +17,39 @@
       let startBtn = document.querySelector("#start");
       let stopBtn = document.querySelector("#stop");
       let mediaRecorder;
+      let chunks = [];
 
       // navigator is a object in browser in which their is mediaDevices is present which is a child object
       // of a navigator. In mediaDevices their is a function called getUserMedia which help us to get
       // Permissions of media from the hardware using browser
-      startBtn.addEventListener("click",function(){
-
+      startBtn.addEventListener("click", function () {
+        //code for start recording
+        mediaRecorder.start();
       });
-      stopBtn.addEventListener("click",function(){
-
+      stopBtn.addEventListener("click", function () {
+        //code for stop recording
+        mediaRecorder.stop();
       });
 
       navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true })
-        .then(function (mainStream) {
-          video.srcObject = mainStream;
+        .getUserMedia({ video: true })
+        .then(function (mediaStream) {
+          video.srcObject = mediaStream;
+          mediaRecorder = new MediaRecorder(mediaStream);
+          mediaRecorder.addEventListener("dataavailable", function (e) {
+            chunks.push(e.data);
+          });
+
+          mediaRecorder.addEventListener("stop", function (e) {
+            let blob = new Blob(chunks, { type: "video/mp4" });
+            chunks = [];
+            let a = document.createElement("a");
+            let url = window.URL.createObjectURL(blob);
+            a.href = url;
+            a.download = "video.mp4";
+            a.click();
+            a.remove();
+          });
         })
         .catch(function (err) {
           console.log(err);

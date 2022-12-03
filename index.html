@@ -11,11 +11,13 @@
     <!-- 'control' is a property which gives controls to the media player -->
     <button id="start">Start</button>
     <button id="stop">Stop</button>
+    <button id="capture">Capture</button>
 
     <script>
       let video = document.querySelector("video");
       let startBtn = document.querySelector("#start");
       let stopBtn = document.querySelector("#stop");
+      let capBtn = document.querySelector("#capture");
       let mediaRecorder;
       let chunks = [];
 
@@ -29,6 +31,23 @@
       stopBtn.addEventListener("click", function () {
         //code for stop recording
         mediaRecorder.stop();
+      });
+
+      capBtn.addEventListener("click", function () {
+        //code for clicking pic
+        let canvas = document.createElement("canvas");
+        canvas.height = video.videoHeight;
+        canvas.width = video.videoWidth;
+        let tool = canvas.getContext("2d");
+        tool.drawImage(video,0,0);
+
+        let link = canvas.toDataURL();
+        let a = document.createElement("a");
+        a.href = link;
+        a.download = "img.png";
+        a.click();
+        a.remove();
+        canvas.remove();
       });
 
       navigator.mediaDevices

@@ -19,7 +19,9 @@
       let video = document.querySelector("video");
       let recordBtn = document.querySelector("#record");
       let isRecording = false;
+      let recDiv = recordBtn.querySelector("div");
       let capBtn = document.querySelector("#capture");
+      let capDiv = capBtn.querySelector("div");
       let mediaRecorder;
       let chunks = [];
 
@@ -41,14 +43,21 @@
         if (isRecording) {
           mediaRecorder.stop();
           isRecording = false;
+          recDiv.classList.remove("record-animation");
         } else {
           mediaRecorder.start();
           isRecording = true;
+          recDiv.classList.add("record-animation");
         }
       });
 
       capBtn.addEventListener("click", function () {
         //code for clicking pic
+
+        capDiv.classList.add("capture-animation");
+        setTimeout(function(){
+          capDiv.classList.remove("capture-animation");
+        },1000)
         let canvas = document.createElement("canvas");
         canvas.height = video.videoHeight;
         canvas.width = video.videoWidth;

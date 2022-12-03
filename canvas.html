@@ -18,28 +18,33 @@
   </head>
   <body>
     <canvas></canvas>
-
+    <img src="i.jpg" alt="error">
     <script>
       let canvas = document.querySelector("canvas");
+      let img = document.querySelector("img");
+
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       let tool = canvas.getContext("2d");
-      tool.moveTo(0, 0); //It move the cursor to the (0,0) axis
-      tool.lineTo(400, 400); //It draws line from cursor to the (400,400) point
-      tool.strokeStyle = "red"; //It gives color
-      tool.lineWidth = 1; //It increase the line width by 1 percent;
-      tool.stroke(); //It makes the line visible
-      tool.beginPath(); //It gives new path to the line
-      tool.moveTo(400, 400);
-      tool.lineTo(800, 0);
-      tool.strokeStyle = "blue";
-      tool.lineWidth = 1;
-      tool.stroke();
+      img.addEventListener("load",function(){
+        tool.drawImage(img,0,0);
+      })
+      // tool.moveTo(0, 0);              //It move the cursor to the (0,0) axis
+      // tool.lineTo(400, 400);          //It draws line from cursor to the (400,400) point
+      // tool.strokeStyle = "red";       //It gives color
+      // tool.lineWidth = 1;             //It increase the line width by 1 percent;
+      // tool.stroke();                  //It makes the line visible
+      // tool.beginPath();               //It gives new path to the line
+      // tool.moveTo(400, 400);
+      // tool.lineTo(800, 0);
+      // tool.strokeStyle = "blue";
+      // tool.lineWidth = 1;
+      // tool.stroke();
 
       //This code is for making a rectangle
 
-      tool.fillStyle = "red";
-      tool.fillRect(100, 100, 200, 200);
+      // tool.fillStyle = "red";
+      // tool.fillRect(100, 100, 200, 200);
     </script>
   </body>
 </html>

@@ -12,8 +12,8 @@
       <video src="any video link here" autoplay></video>
     </div>
     <!-- 'control' is a property which gives controls to the media player -->
-    <button id="record">Start</button>
-    <button id="capture">Capture</button>
+    <button id="record"><div></div></button>
+    <button id="capture"><div></div></button>
 
     <script>
       let video = document.querySelector("video");
@@ -41,11 +41,9 @@
         if (isRecording) {
           mediaRecorder.stop();
           isRecording = false;
-          e.currentTarget.innerText = "Start";
         } else {
           mediaRecorder.start();
           isRecording = true;
-          e.currentTarget.innerText = "Recording";
         }
       });
 

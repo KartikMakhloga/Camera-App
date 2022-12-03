@@ -1,40 +1,57 @@
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
 
-body{
-    margin: 0;
-    background-color: black;
+body {
+  margin: 0;
+  background-color: black;
 }
 
 #record,
-#capture{
-    height: 5rem;
-    width: 5rem;
-    border-radius: 50%;
-    outline: none;
-    border: none;
-    position: fixed;
+#capture {
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  outline: none;
+  border: none;
+  position: fixed;
+  border: 5px solid white;
+  background: black;
 }
 
-#record{
-    top: 30vh;
-    right: 20px;
+#record {
+  top: 30vh;
+  right: 20px;
 }
 
-#capture{
-    top: 45vh;
-    right: 20px;
+#capture {
+  top: 45vh;
+  right: 20px;
 }
 
-#video-container{
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+#video-container {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
-video{
-    height: 100%;
-    width: 100%;
+video {
+  height: 100%;
+  width: 100%;
 }
 
+#record div {
+  height: 60%;
+  width: 65%;
+  background: red;
+  margin: auto;
+  border-radius: 50%;
+}
+
+#capture div {
+  height: 60%;
+  width: 65%;
+  background: white;
+  margin: auto;
+  border-radius: 50%;
+}

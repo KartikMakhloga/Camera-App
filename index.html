@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="video-container">
-      <video src="any video link here" autoplay></video>
+      <video muted src="any video link here" autoplay></video>
     </div>
     <!-- 'control' is a property which gives controls to the media player -->
     <button id="record"><div></div></button>
@@ -44,10 +44,12 @@
           mediaRecorder.stop();
           isRecording = false;
           recDiv.classList.remove("record-animation");
+          video.setAttribute("muted");
         } else {
           mediaRecorder.start();
           isRecording = true;
           recDiv.classList.add("record-animation");
+          video.removeAttribute("muted");
         }
       });
 
@@ -74,7 +76,7 @@
       });
 
       navigator.mediaDevices
-        .getUserMedia({ video: true })
+        .getUserMedia({ video: true, audio: true })
         .then(function (mediaStream) {
           video.srcObject = mediaStream;
           mediaRecorder = new MediaRecorder(mediaStream);

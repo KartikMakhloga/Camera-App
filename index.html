@@ -9,14 +9,13 @@
   <body>
     <video src="any video link here" controls autoplay></video>
     <!-- 'control' is a property which gives controls to the media player -->
-    <button id="start">Start</button>
-    <button id="stop">Stop</button>
+    <button id="record">Start</button>
     <button id="capture">Capture</button>
 
     <script>
       let video = document.querySelector("video");
-      let startBtn = document.querySelector("#start");
-      let stopBtn = document.querySelector("#stop");
+      let recordBtn = document.querySelector("#record");
+      let isRecording = false;
       let capBtn = document.querySelector("#capture");
       let mediaRecorder;
       let chunks = [];
@@ -24,13 +23,27 @@
       // navigator is a object in browser in which their is mediaDevices is present which is a child object
       // of a navigator. In mediaDevices their is a function called getUserMedia which help us to get
       // Permissions of media from the hardware using browser
-      startBtn.addEventListener("click", function () {
-        //code for start recording
-        mediaRecorder.start();
-      });
-      stopBtn.addEventListener("click", function () {
-        //code for stop recording
-        mediaRecorder.stop();
+
+      // startBtn.addEventListener("click", function () {
+      //   //code for start recording
+      //   mediaRecorder.start();
+      // });
+
+      // stopBtn.addEventListener("click", function () {
+      //   //code for stop recording
+      //   mediaRecorder.stop();
+      // });
+
+      recordBtn.addEventListener("click", function (e) {
+        if (isRecording) {
+          mediaRecorder.stop();
+          isRecording = false;
+          e.currentTarget.innerText = "Start";
+        } else {
+          mediaRecorder.start();
+          isRecording = true;
+          e.currentTarget.innerText = "Recording";
+        }
       });
 
       capBtn.addEventListener("click", function () {
@@ -39,7 +52,7 @@
         canvas.height = video.videoHeight;
         canvas.width = video.videoWidth;
         let tool = canvas.getContext("2d");
-        tool.drawImage(video,0,0);
+        tool.drawImage(video, 0, 0);
 
         let link = canvas.toDataURL();
         let a = document.createElement("a");

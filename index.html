@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="video-container">
-      <video muted src="any video link here" autoplay></video>
+      <video muted src="any video link here" autoplay style="transform: scale(1);"></video>
     </div>
     <!-- 'control' is a property which gives controls to the media player -->
     <button id="record"><div></div></button>
@@ -18,28 +18,30 @@
     <div class="filter-container">
       <div
         class="filter"
-        style="background-color: #d6303089; background-blend-mode: color-burn"
+        style="background-color: #d6303089; background-blend-mode: luminosity"
       ></div>
       <div
         class="filter"
-        style="background-color: #55efc37e; background-blend-mode: color-burn"
+        style="background-color: #55efc37e; background-blend-mode: luminosity"
       ></div>
       <div
         class="filter"
-        style="background-color: #0985e381; background-blend-mode: color-burn"
+        style="background-color: #0985e381; background-blend-mode: luminosity"
       ></div>
       <div
         class="filter"
-        style="background-color: #fdcb6e82; background-blend-mode: color-burn"
+        style="background-color: #fdcb6e82; background-blend-mode: luminosity"
       ></div>
       <div
         class="filter"
-        style="background-color: #e8439380; background-blend-mode: color-burn"
+        style="background-color: #e8439380; background-blend-mode: luminosity"
       ></div>
-      <div
-        class="filter"
-        style="background-color: #b2bec3; background-blend-mode: color-burn"
-      ></div>
+      <div class="filter"></div>
+    </div>
+
+    <div class="zoom-container">
+      <div class="zoom-in">+</div>
+      <div class="zoom-out">-</div>
     </div>
 
     <script src="script.js"></script>

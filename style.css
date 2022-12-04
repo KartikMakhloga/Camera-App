@@ -17,6 +17,8 @@ body {
   position: fixed;
   border: 5px solid white;
   background: black;
+  z-index: 3;
+  cursor: pointer;
 }
 
 #record {
@@ -85,6 +87,7 @@ video {
   width: 7vw;
   top: 30vh;
   left: 5vw;
+  z-index: 3;
 }
 
 .filter{
@@ -93,4 +96,46 @@ video {
   width: 100%;
   background-image: url(i.jpg);
   background-size: cover;
+  cursor: pointer;
+}
+
+.filter-div{
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.filter:hover{
+  height: 10vh;
+  width: 8vw;
+}
+
+.zoom-container{
+  height: 20vh;
+  width: 5rem;
+  border: 1px solid white;
+  position: fixed;
+  top: 5vh;
+  right: 20px;
+  z-index: 3;
+}
+
+.zoom-container div{
+  height: 50%;
+  width: 100%;
+  color: white;
+  text-align: center;
+  font-size: 4rem;
+  font-weight: bold;
+  background: #57606f;
+  cursor: pointer;
+  user-select: none;
+}
+
+.zoom-container div:hover{
+  
+  background: #9fa1a4;
 }

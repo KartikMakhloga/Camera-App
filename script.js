@@ -14,38 +14,37 @@ let currZoom = 1;
 let zoomInBtn = document.querySelector(".zoom-in");
 let zoomOutBtn = document.querySelector(".zoom-out");
 
-zoomInBtn.addEventListener("click",function(){
-  if(currZoom<maxZoom){
+zoomInBtn.addEventListener("click", function () {
+  if (currZoom < maxZoom && !isRecording) {
     currZoom = currZoom + 0.1;
   }
-  video.style.transform = `scale(${currZoom})`
-
+  video.style.transform = `scale(${currZoom})`;
 });
 
-zoomOutBtn.addEventListener("click",function(){
-  if(currZoom>minZoom){
+zoomOutBtn.addEventListener("click", function () {
+  if (currZoom > minZoom && !isRecording) {
     currZoom = currZoom - 0.1;
   }
 
-  video.style.transform = `scale(${currZoom})`
+  video.style.transform = `scale(${currZoom})`;
 });
 
-let filters = document.querySelectorAll(".filter")
+let filters = document.querySelectorAll(".filter");
 
-for(let i = 0;i<filters.length;i++){
-    filters[i].addEventListener("click",function(e){
-      removeFilter();
-      appliedFilter = e.currentTarget.style.backgroundColor;
-      let div = document.createElement("div");
-      div.style.backgroundColor = appliedFilter;
-      div.classList.add("filter-div");
-      body.append(div);
-    });
+for (let i = 0; i < filters.length; i++) {
+  filters[i].addEventListener("click", function (e) {
+    removeFilter();
+    appliedFilter = e.currentTarget.style.backgroundColor;
+    let div = document.createElement("div");
+    div.style.backgroundColor = appliedFilter;
+    div.classList.add("filter-div");
+    body.append(div);
+  });
 }
 
-function removeFilter(){
+function removeFilter() {
   let Filter = document.querySelector(".filter-div");
-  if(Filter) Filter.remove();
+  if (Filter) Filter.remove();
   return;
 }
 
@@ -74,6 +73,8 @@ recordBtn.addEventListener("click", function (e) {
     appliedFilter = ""; //color remove
     removeFilter(); // remove from UI
     isRecording = true;
+    currZoom = 1;
+    video.style.transform = `scale(${currZoom})`;
     recDiv.classList.add("record-animation");
     video.removeAttribute("muted");
   }
@@ -87,15 +88,24 @@ capBtn.addEventListener("click", function () {
   setTimeout(function () {
     capDiv.classList.remove("capture-animation");
   }, 1000);
+
+  //save the image which is on screen
   let canvas = document.createElement("canvas");
   canvas.height = video.videoHeight;
   canvas.width = video.videoWidth;
   let tool = canvas.getContext("2d");
+  
+  // origin shifting
+  tool.translate(canvas.height / 2, canvas.width / 2);   //it changes the origin to center
+  tool.scale(currZoom, currZoom);
+  tool.translate(-canvas.height / 2, -canvas.width / 2);   //it changes the origin back to top-left corner
+  // origin shifting end
+
   tool.drawImage(video, 0, 0);
 
-  if(appliedFilter){
+  if (appliedFilter) {
     tool.fillStyle = appliedFilter;
-    tool.fillRect(0,0,canvas.height,canvas.width);
+    tool.fillRect(0, 0, canvas.height, canvas.width);
   }
 
   let link = canvas.toDataURL();

@@ -96,16 +96,16 @@ capBtn.addEventListener("click", function () {
   let tool = canvas.getContext("2d");
   
   // origin shifting
-  tool.translate(canvas.height / 2, canvas.width / 2);   //it changes the origin to center
+  tool.translate(canvas.width / 2, canvas.height / 2);   //it changes the origin to center
   tool.scale(currZoom, currZoom);
-  tool.translate(-canvas.height / 2, -canvas.width / 2);   //it changes the origin back to top-left corner
+  tool.translate(-canvas.width / 2, -canvas.height / 2);   //it changes the origin back to top-left corner
   // origin shifting end
 
   tool.drawImage(video, 0, 0);
 
   if (appliedFilter) {
     tool.fillStyle = appliedFilter;
-    tool.fillRect(0, 0, canvas.height, canvas.width);
+    tool.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   let link = canvas.toDataURL();

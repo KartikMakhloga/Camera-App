@@ -5,14 +5,113 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      select {
+        display: block;
+        height: 2rem;
+        width: 7rem;
+        margin: auto;
+        margin-bottom: 10px;
+      }
+      #title {
+        display: block;
+        height: 2rem;
+        width: 20rem;
+        margin: auto;
+        margin-bottom: 5px;
+      }
+
+      #content {
+        display: block;
+        height: 15rem;
+        width: 25rem;
+        margin: auto;
+        margin-bottom: 5px;
+      }
+
+      button {
+        display: block;
+        margin: auto;
+        margin-bottom: 10px;
+      }
+    </style>
   </head>
   <body>
+    <select name="notes" id="notes">
+      <option value="placementNotes">Placement Notes</option>
+      <option value="collegeNotes">College Notes</option>
+      <option value="generalNotes">General Notes</option>
+    </select>
+    <br />
+
+    <input id="title" placeholder="Title" />
+    <br />
+    <textarea id="content"></textarea>
+    <br />
+    <button id="submit">Submit</button>
+    <hr />
+    <button id="placement">View placement notes</button>
+    <button id="college">View college notes</button>
+    <button id="general">View general notes</button>
+
+    <ul class="note"></ul>
+
     <script>
+      let submitBtn = document.querySelector("#submit");
+      let title = document.querySelector("#title");
+      let content = document.querySelector("#content");
+      let select = document.querySelector("select");
+      let placementBtn = document.querySelector("#placement");
+      let generalBtn = document.querySelector("#general");
+      let collegeBtn = document.querySelector("#college");
+      let ul = document.querySelector(".note");
+      let contentDoc;
+      let titleDoc;
+
+      placementBtn.addEventListener("click", function () {
+        viewNotes("placementNotes");
+      });
+      collegeBtn.addEventListener("click", function () {
+        viewNotes("collegeNotes");
+      });
+      generalBtn.addEventListener("click", function () {
+        viewNotes("generalNotes");
+      });
+
+      submitBtn.addEventListener("click", function () {
+        if (content.value == "" || title.value == "") {
+          alert("enter title and content");
+          return;
+        } else {
+          let collectionName = select.value;
+          let obj = {};
+          if (collectionName == "placementNotes") {
+            obj.pId = Date.now();
+          }
+          if (collectionName == "generalNotes") {
+            obj.gId = Date.now();
+          }
+          if (collectionName == "collegeNotes") {
+            obj.cId = Date.now();
+          }
+          obj.title = title.value;
+          obj.content = content.value;
+          addNote(collectionName, obj);
+        }
+      });
       let req = indexedDB.open("NotesDB", 1);
       // indexedDB.open("Name-of-DB",version-of-DB);
 
       req.addEventListener("success", function () {
-        let accessToNotesDB = req.result;
+        db = req.result;
         alert("db was opened successfully");
       });
 
@@ -23,13 +122,46 @@
         let accessToNotesDB = req.result;
         //I can create an objectStore
         // accessToNotesDB.createObjectStore("collection-name",{keyPath:nID});
-        accessToNotesDB.createObjectStore("csNotes",{keyPath:"nID"});
+        accessToNotesDB.createObjectStore("placementNotes", { keyPath: "pId" });
+        accessToNotesDB.createObjectStore("generalNotes", { keyPath: "gId" });
+        accessToNotesDB.createObjectStore("collegeNotes", { keyPath: "cId" });
         alert("db was updated/created successfully");
       });
 
       req.addEventListener("error", function () {
         alert("error in creation/opening");
       });
+
+      function addNote(collectionName, obj) {
+        if (!db) return;
+
+        let tx = db.transaction(collectionName, "readwrite");
+        let reqObjectStore = tx.objectStore(collectionName);
+        reqObjectStore.add(obj);
+      }
+
+      function viewNotes(collectionName) {
+        if (!db) return;
+
+        let tx = db.transaction(collectionName, "readonly");
+        let reqObjectStore = tx.objectStore(collectionName);
+        let cursorReq = reqObjectStore.openCursor();
+
+        let oldLis = ul.querySelectorAll("li");
+        for(let i = 0;i<oldLis.length;i++){
+          oldLis[i].remove();
+        }
+
+        cursorReq.addEventListener("success", function () {
+          let cursor = cursorReq.result;
+          if (cursor) {
+            let li = document.createElement("li");
+            li.innerHTML = `<div>${cursor.value.title}</div> <div>${cursor.value.content}</div> <br>`;
+            ul.appendChild(li);
+            cursor.continue();
+          }
+        });
+      }
     </script>
   </body>
 </html>

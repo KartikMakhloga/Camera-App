@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let req = indexedDB.open("NotesDB", 1);
+      // indexedDB.open("Name-of-DB",version-of-DB);
+
+      req.addEventListener("success", function () {
+        let accessToNotesDB = req.result;
+        alert("db was opened successfully");
+      });
+
+      //upgrade event occurs in 2 cases
+      //case1: when we create a new db
+      //case2: when you try to open a database which already existed with a incremented version
+      req.addEventListener("upgradeneeded", function () {
+        let accessToNotesDB = req.result;
+        //I can create an objectStore
+        // accessToNotesDB.createObjectStore("collection-name",{keyPath:nID});
+        accessToNotesDB.createObjectStore("csNotes",{keyPath:"nID"});
+        alert("db was updated/created successfully");
+      });
+
+      req.addEventListener("error", function () {
+        alert("error in creation/opening");
+      });
+    </script>
+  </body>
+</html>

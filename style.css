@@ -58,29 +58,41 @@ video {
   border-radius: 50%;
 }
 
-.record-animation{
-    animation: zoom-in-out 0.5s infinite;
+#gallery {
+  height: 5rem;
+  width: 5rem;
+  outline: none;
+  border: none;
+  position: fixed;
+  z-index: 3;
+  cursor: pointer;
+  bottom: 100px;
+  right: 20px;
 }
 
-.capture-animation{
-    animation: zoom-in-out 1s;
+.record-animation {
+  animation: zoom-in-out 0.5s infinite;
 }
 
-@keyframes zoom-in-out{
-    0%{
-        transform: scale(1);
-    }
-
-    50%{
-        transform: scale(1.2);
-    }
-
-    100%{
-        transform: scale(1);
-    }
+.capture-animation {
+  animation: zoom-in-out 1s;
 }
 
-.filter-container{
+@keyframes zoom-in-out {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.filter-container {
   border: 1px solid white;
   position: fixed;
   height: 40vh;
@@ -90,16 +102,16 @@ video {
   z-index: 3;
 }
 
-.filter{
+.filter {
   border: 1px solid white;
-  height: calc( 100% / 6 );
+  height: calc(100% / 6);
   width: 100%;
   background-image: url(i.jpg);
   background-size: cover;
   cursor: pointer;
 }
 
-.filter-div{
+.filter-div {
   height: 100vh;
   width: 100vw;
   position: fixed;
@@ -108,12 +120,12 @@ video {
   opacity: 0.4;
 }
 
-.filter:hover{
+.filter:hover {
   height: 10vh;
   width: 8vw;
 }
 
-.zoom-container{
+.zoom-container {
   height: 20vh;
   width: 5rem;
   border: 1px solid white;
@@ -123,7 +135,7 @@ video {
   z-index: 3;
 }
 
-.zoom-container div{
+.zoom-container div {
   height: 50%;
   width: 100%;
   color: white;
@@ -135,7 +147,6 @@ video {
   user-select: none;
 }
 
-.zoom-container div:hover{
-  
+.zoom-container div:hover {
   background: #9fa1a4;
 }

@@ -1,0 +1,14 @@
+first open a indexDb database - Camera,1 [collection.objectStore = Gallery]
+
+3 function - add , view ,delete
+
+Render all images and videos in Gallery
+
+All those media should have 2 things - Delete and download
+
+
+Blob me url bnare the, that was working as a pointer
+
+on the other hand for image it is a data url, 665kb
+
+

@@ -5,6 +5,7 @@ let isRecording = false;
 let recDiv = recordBtn.querySelector("div");
 let capBtn = document.querySelector("#capture");
 let capDiv = capBtn.querySelector("div");
+let galleryBtn = document.querySelector("#gallery");
 let mediaRecorder;
 let appliedFilter;
 let chunks = [];
@@ -13,6 +14,10 @@ let minZoom = 1;
 let currZoom = 1;
 let zoomInBtn = document.querySelector(".zoom-in");
 let zoomOutBtn = document.querySelector(".zoom-out");
+
+galleryBtn.addEventListener("click",function(){
+  location.assign("gallery.html")
+})
 
 zoomInBtn.addEventListener("click", function () {
   if (currZoom < maxZoom && !isRecording) {
@@ -109,12 +114,13 @@ capBtn.addEventListener("click", function () {
   }
 
   let link = canvas.toDataURL();
-  let a = document.createElement("a");
-  a.href = link;
-  a.download = "img.png";
-  a.click();
-  a.remove();
-  canvas.remove();
+  addMedia(link,"image");
+  // let a = document.createElement("a");
+  // a.href = link;
+  // a.download = "img.png";
+  // a.click();
+  // a.remove();
+  // canvas.remove();
 });
 
 navigator.mediaDevices
@@ -129,12 +135,13 @@ navigator.mediaDevices
     mediaRecorder.addEventListener("stop", function (e) {
       let blob = new Blob(chunks, { type: "video/mp4" });
       chunks = [];
-      let a = document.createElement("a");
-      let url = window.URL.createObjectURL(blob);
-      a.href = url;
-      a.download = "video.mp4";
-      a.click();
-      a.remove();
+      addMedia(blob,"video");
+      // let a = document.createElement("a");
+      // let url = window.URL.createObjectURL(blob);
+      // a.href = url;
+      // a.download = "video.mp4";
+      // a.click();
+      // a.remove();
     });
   })
   .catch(function (err) {

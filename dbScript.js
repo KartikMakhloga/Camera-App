@@ -21,6 +21,15 @@ function addMedia(media, type) {
   gallery.add(obj);
 }
 
+function deleteMedia(id){
+    if (!db) return;
+    let tx = db.transaction("Gallery", "readwrite");
+    let gallery = tx.objectStore("Gallery");
+    // when we set id as an attribute to delete btn it becomes a string but we have store the id as a number in db
+    // so we have to typecast
+    gallery.delete(Number(id));
+}
+
 function viewMedia() {
   if (!db) return;
 
@@ -43,7 +52,7 @@ function viewMedia() {
                                     <video src="${url}" autoplay loop controls muted></video>
                                      </div>
                                      <button class="download">Download</button>
-                                     <button class="delete">Delete</button>`;
+                                     <button class="delete" data-id="${mo.mId}">Delete</button>`;
       } else {
         //I have to render a image tag
         LinkForDownload = cursor.value.media;
@@ -51,13 +60,32 @@ function viewMedia() {
                                    <img src="${cursor.value.media}" />
                                    </div>
                                    <button class="download">Download</button>
-                                   <button class="delete">Delete</button>`;
+                                   <button class="delete" data-id="${mo.mId}">Delete</button>`;
       }
+      let downloadBtn = MediaContainer.querySelector(".download");
       
-      
+      downloadBtn.addEventListener("click", function () {
+        let a = document.createElement("a");
+        a.href = LinkForDownload;
+        if(mo.type=="video"){
+            a.download = "video.mp4";
+        }else{
+            a.download = "img.png";
+        }
+        a.click();
+        a.remove();
+      });
+       
+      let deleteBtn = MediaContainer.querySelector(".delete");
 
+      deleteBtn.addEventListener("click",function(e){
+          //removing from db
+          let id = e.currentTarget.getAttribute("data-id");
+          deleteMedia(id);
+          //removing from UI 
+          e.currentTarget.parentElement.remove();
+      })
       div.appendChild(MediaContainer);
-      console.log(cursor);
       cursor.continue();
     }
   });

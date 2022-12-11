@@ -15,7 +15,26 @@ req.addEventListener("error", function () {
 function addMedia(media, type) {
   if (!db) return;
   let obj = { mId: Date.now(), media, type };
-  let tx = db.transaction("Gallery","readwrite");
+  let tx = db.transaction("Gallery", "readwrite");
   let gallery = tx.objectStore("Gallery");
   gallery.add(obj);
 }
+
+
+function viewMedia() {
+  if (!db) return;
+
+  let tx = db.transaction("Gallery", "readonly");
+  let gallery = tx.objectStore("Gallery");
+  let cursorReq = gallery.openCursor();
+
+  cursorReq.addEventListener("success", function () {
+    let cursor = cursorReq.result;
+    if (cursor) {
+      console.log(cursor.value);
+      cursor.continue;
+    }
+  });
+}
+
+

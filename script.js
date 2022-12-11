@@ -19,6 +19,7 @@ galleryBtn.addEventListener("click",function(){
   location.assign("gallery.html")
 })
 
+
 zoomInBtn.addEventListener("click", function () {
   if (currZoom < maxZoom && !isRecording) {
     currZoom = currZoom + 0.1;
